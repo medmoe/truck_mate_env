@@ -1,0 +1,41 @@
+# Python/Django
+*.pyc
+__pycache__/
+*.pyo
+*.egg-info/
+*.egg
+*.log
+*.swp
+*.swo
+*.sqlite3
+*.db
+*.DS_Store
+
+# Node.js / React
+/truck_mate_front/node_modules
+# Project-specific
+pyvenv.cfg
+/.idea
+/bin
+/include
+/lib
+/lib64
+/truck_mate_env/
+!/truck_mate_env/bin/
+!/truck_mate_env/include/
+!/truck_mate_env/lib/
+!/truck_mate_env/lib64/
+/db.sqlite3
+/static/
+/media/
+
+# Django app
+/truckMate/__pycache__/
+/truckMate/migrations/
+/truckMate/staticfiles/
+/truckMate/media/
+
+# React app
+/truck_mate_front/node_modules/
+/truck_mate_front/build/
+
