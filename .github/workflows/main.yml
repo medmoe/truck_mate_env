@@ -24,6 +24,8 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+      - name: Check environment variables
+        run: docker exec -it ${{ job.services.postgres.name }} env
 
       - name: psycopg2 prerequisites
         run: sudo apt-get install libpq-dev
