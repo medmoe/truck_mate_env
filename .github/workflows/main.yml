@@ -23,8 +23,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Check environment variables
-        run: docker exec -it postgres-container env
 
       - name: psycopg2 prerequisites
         run: sudo apt-get install libpq-dev
