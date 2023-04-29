@@ -10,6 +10,7 @@ __pycache__/
 *.sqlite3
 *.db
 *.DS_Store
+.env
 
 # Node.js / React
 /truck_mate_front/node_modules
