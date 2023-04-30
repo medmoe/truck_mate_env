@@ -1,5 +1,5 @@
 import React, {FormEvent} from "react";
-
+import styles from '../login/LoginForm.module.css'
 type Props = {
     handleSubmit: (event: FormEvent) => void;
     handleChange: (event: FormEvent) => void;
@@ -18,10 +18,10 @@ export function SignUpForm(props: Props) {
                 <label htmlFor="username">Username: </label>
                 <input type="text" id="username" name="username" onChange={props.handleChange} />
                 <label htmlFor="pass1">Password: </label>
-                <input type="password" id="pass1" name="pass1" onChange={props.handleChange} />
+                <input type="password" id="password" name="password" onChange={props.handleChange} />
                 <label htmlFor="pass2">Renter password: </label>
                 <input type="password" id="pass2" name="pass2" onChange={props.handleChange} />
-                <input type="submit" value="submit" id="submit_btn" />
+                <input className={styles.submit_btn} type="submit" value="submit" id="submit_btn" />
             </form>
         </div>
     );

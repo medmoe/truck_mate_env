@@ -1,5 +1,6 @@
 import React, {FormEvent} from "react";
 import styles from './LoginForm.module.css';
+import {Link} from "react-router-dom";
 
 type Props = {
     handleSubmit: (event: FormEvent) => void;
@@ -19,7 +20,7 @@ export function LoginForm(props: Props) {
                 <input className={styles.submit_btn} type="submit" value="submit" id="submit_btn"/>
                 <div className={styles.labels_container}>
                     <label>Forgot password?</label>
-                    <label>Create account</label>
+                    <label><Link to="/signup">Create account </Link></label>
                 </div>
             </form>
         </div>
