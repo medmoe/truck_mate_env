@@ -6,6 +6,14 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 
+from .models import Driver, Truck, Performance, Cost
+from .serializers import (
+    DriverSerializer,
+    TruckSerializer,
+    PerformanceSerializer,
+    CostSerializer,
+)
+
 
 class SignUpView(generics.CreateAPIView):
     serializer_class = UserSerializer
@@ -33,3 +41,51 @@ class LoginView(APIView):
             token, created = Token.objects.get_or_create(user=user)
             return Response({'token': token.key}, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class DriverList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Driver.objects.all()
+    serializer_class = DriverSerializer
+
+
+class DriverDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Driver.objects.all()
+    serializer_class = DriverSerializer
+
+
+class TruckList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+
+
+class TruckDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Truck.objects.all()
+    serializer_class = TruckSerializer
+
+
+class PerformanceList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Performance.objects.all()
+    serializer_class = PerformanceSerializer
+
+
+class PerformanceDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Performance.objects.all()
+    serializer_class = PerformanceSerializer
+
+
+class CostList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Cost.objects.all()
+    serializer_class = CostSerializer
+
+
+class CostDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Cost.objects.all()
+    serializer_class = CostSerializer
