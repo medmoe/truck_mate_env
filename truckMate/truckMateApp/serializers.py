@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from .models import Driver, Truck, Performance, Cost
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -45,3 +46,27 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs['user'] = user
         return attrs
+
+
+class DriverSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Driver
+        fields = '__all__'
+
+
+class TruckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Truck
+        fields = '__all__'
+
+
+class PerformanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Performance
+        fields = '__all__'
+
+
+class CostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cost
+        fields = '__all__'

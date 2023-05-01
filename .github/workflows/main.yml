@@ -35,6 +35,7 @@ jobs:
       - name: Run migrations
         run: |
           cd truckMate
+          python manage.py makemigrations
           python manage.py migrate
 
       - name: Run backend tests
