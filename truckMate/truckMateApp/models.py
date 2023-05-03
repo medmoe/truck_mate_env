@@ -1,9 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 class Driver(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
@@ -13,6 +15,7 @@ class Driver(models.Model):
 
 
 class Truck(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     model = models.CharField(max_length=100)
     brand = models.CharField(max_length=100)
     starting_date = models.DateField()
@@ -22,6 +25,7 @@ class Truck(models.Model):
 
 
 class Performance(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
     date = models.DateField()
@@ -34,6 +38,7 @@ class Performance(models.Model):
 
 
 class Cost(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     date = models.DateField()

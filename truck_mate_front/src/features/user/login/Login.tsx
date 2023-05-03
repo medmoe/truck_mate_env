@@ -26,7 +26,8 @@ export function Login() {
         }
         await axios.post("http://localhost:8000/login/", JSON.stringify(userInfo), options)
             .then((res) => {
-                localStorage.setItem('token', res.data.token)
+                localStorage.setItem("user_id", res.data.user_id);
+                localStorage.setItem("token", res.data.token)
                 navigate('/dashboard')
             })
             .catch((err) => {

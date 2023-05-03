@@ -44,7 +44,8 @@ export function SignUp() {
         delete userInfo.pass2;
         await axios.post("http://localhost:8000/signup/", JSON.stringify(userInfo), options)
             .then((res) => {
-                localStorage.setItem('token', res.data.token);
+                localStorage.setItem("user_id", res.data.user_id);
+                localStorage.setItem("token", res.data.token)
                 navigate('/dashboard')
 
             })

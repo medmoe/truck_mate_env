@@ -30,7 +30,11 @@ class DriverViewTestCase(APITestCase):
 
     def setUp(self):
         """ Define the test client and other test variables """
+        self.user = User.objects.create_user(username="medmoe",
+                                             email="med.seffah@gmail.com",
+                                             password="passPhrase")
         self.driver_data = {
+            "owner": self.user.id,
             "first_name": "John",
             "last_name": "Doe",
             "date_of_birth": "1990-01-01",
@@ -38,9 +42,7 @@ class DriverViewTestCase(APITestCase):
             "starting_date": "2022-01-01",
             "end_date": "2023-01-01"
         }
-        self.user = User.objects.create_user(username="medmoe",
-                                             email="med.seffah@gmail.com",
-                                             password="passPhrase")
+
         self.client.force_authenticate(user=self.user)
         self.response = self.client.post(
             reverse('driver-list'),
@@ -83,7 +85,11 @@ class TruckViewTestCase(APITestCase):
 
     def setUp(self):
         """ Define the test client and other test variables """
+        self.user = User.objects.create_user(username="medmoe",
+                                             email="med.seffah@gmail.com",
+                                             password="passPhrase")
         self.truck_data = {
+            "owner": self.user.id,
             "model": "1030",
             "brand": "JAC",
             "starting_date": "2000-01-01",
@@ -91,9 +97,7 @@ class TruckViewTestCase(APITestCase):
             "mileage": 100000,
             "capacity": 3000,
         }
-        self.user = User.objects.create_user(username="medmoe",
-                                             email="med.seffah@gmail.com",
-                                             password="passPhrase")
+
         self.client.force_authenticate(user=self.user)
         self.response = self.client.post(
             reverse("truck-list"),
@@ -130,6 +134,7 @@ class TruckViewTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Truck.objects.count(), 0)
 
+
 class PerformanceViewTestCase(APITestCase):
     """ Test case suite for the Performance view """
 
@@ -139,6 +144,7 @@ class PerformanceViewTestCase(APITestCase):
                                              password="passPhrase")
         self.client.force_authenticate(user=self.user)
         self.driver1 = Driver.objects.create(
+            owner=self.user,
             first_name='John',
             last_name='Doe',
             date_of_birth='1990-01-01',
@@ -147,6 +153,7 @@ class PerformanceViewTestCase(APITestCase):
             end_date=None
         )
         self.driver2 = Driver.objects.create(
+            owner=self.user,
             first_name='Jane',
             last_name='Doe',
             date_of_birth='1995-01-01',
@@ -155,6 +162,7 @@ class PerformanceViewTestCase(APITestCase):
             end_date=None
         )
         self.truck1 = Truck.objects.create(
+            owner=self.user,
             model='Model A',
             brand='Brand A',
             starting_date='2021-01-01',
@@ -163,6 +171,7 @@ class PerformanceViewTestCase(APITestCase):
             capacity=100
         )
         self.truck2 = Truck.objects.create(
+            owner=self.user,
             model='Model B',
             brand='Brand B',
             starting_date='2022-01-01',
@@ -171,6 +180,7 @@ class PerformanceViewTestCase(APITestCase):
             capacity=200
         )
         self.performance1 = Performance.objects.create(
+            owner=self.user,
             driver=self.driver1,
             truck=self.truck1,
             date=date.today(),
@@ -182,6 +192,7 @@ class PerformanceViewTestCase(APITestCase):
             ending_time='17:00'
         )
         self.performance2 = Performance.objects.create(
+            owner=self.user,
             driver=self.driver2,
             truck=self.truck2,
             date=date.today(),
@@ -207,6 +218,7 @@ class PerformanceViewTestCase(APITestCase):
 
     def test_create_performance(self):
         data = {
+            'owner': self.user.id,
             'driver': self.driver1.id,
             'truck': self.truck1.id,
             'date': date.today(),
