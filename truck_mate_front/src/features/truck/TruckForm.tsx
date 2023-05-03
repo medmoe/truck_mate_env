@@ -25,7 +25,7 @@ export function TruckForm() {
         if (truckData.owner) {
             axios.post("http://localhost:8000/trucks/", JSON.stringify(truckData), {
                 headers: {
-                    'content-type': 'application/json',
+                    'Content-Type': 'application/json',
                     Authorization: `Token ${token}`,
                 }, withCredentials: true
             })

@@ -10,7 +10,7 @@ export function NavigationBar() {
                     <a href="#">Logo</a>
                 </div>
                 <ul className={styles.menu}>
-                    <li><a href="#">Home</a></li>
+                    <li><Link to="/dashboard"><a href="#">Home</a></Link></li>
                     <li><a href="#">About</a></li>
                     <li><Link to="/dashboard" ><a href="#">Services</a></Link></li>
                     <li><a href="#">Contact</a></li>

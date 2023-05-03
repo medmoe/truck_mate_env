@@ -19,3 +19,14 @@ export interface DriverInfo {
     starting_date: string,
     ending_date: string,
 }
+export interface PerformanceInfo {
+    id?: number,
+    owner?: number | null,
+    driver: number,
+    truck: number,
+    date: string,
+    starting_quantity: number,
+    ending_quantity: number,
+    starting_time: string,
+    ending_time: string,
+}

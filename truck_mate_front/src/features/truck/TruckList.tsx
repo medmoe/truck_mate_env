@@ -5,7 +5,6 @@ import {TruckInfo} from "../../types/types";
 import {TruckRow} from "./TruckRow";
 import styles from './Truck.module.css';
 import {Link} from "react-router-dom";
-import {TruckForm} from "./TruckForm";
 
 
 export function TruckList() {
