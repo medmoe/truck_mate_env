@@ -8,6 +8,7 @@ import {TruckDetail} from "./features/truck/TruckDetail";
 import {DriverList} from "./features/driver/DriverList";
 import {DriverDetail} from "./features/driver/DriverDetail";
 import {TruckForm} from "./features/truck/TruckForm";
+import {DriverForm} from "./features/driver/DriverForm";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/driver-list" element={<DriverList />} />
             <Route path="/driver-detail" element={<DriverDetail />} />
             <Route path="/add-truck" element={<TruckForm />} />
+            <Route path="/add-driver" element={<DriverForm />} />
         </Routes>
     </Router>
   );

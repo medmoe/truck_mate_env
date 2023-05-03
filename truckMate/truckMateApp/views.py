@@ -45,6 +45,7 @@ class LoginView(APIView):
 
 
 class DriverList(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer

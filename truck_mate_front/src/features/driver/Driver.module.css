@@ -1,4 +1,4 @@
-.truck_list_container {
+.driver_list_container {
     background-color: #eaeaea;
     border: 1px solid #eaeaea;
 }
@@ -28,7 +28,7 @@
     background-color: #016cc7;
 }
 
-.truck_row {
+.driver_row {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -36,7 +36,7 @@
     border-bottom: 1px solid #ccc;
 }
 
-.truck_row ul {
+.driver_row ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -47,19 +47,20 @@
 
 }
 
-.truck_row ul li {
+.driver_row ul li {
     flex-basis: calc(100% / 7);
     text-align: center;
 }
-.truck_row ul li img {
-    width: 20px;
+
+.driver_row ul li img {
+    width: 25px;
 }
 
 .truck_row:hover {
     background-color: #f5f5f5;
 }
 
-.truck_form {
+.driver_form {
   max-width: 500px;
   margin: auto;
   padding: 20px;
@@ -68,13 +69,13 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.truck_form label {
+.driver_form label {
   font-weight: bold;
 }
 
-.truck_form input[type="text"],
-.truck_form input[type="date"],
-.truck_form input[type="tel"] {
+.driver_form input[type="text"],
+.driver_form input[type="date"],
+.driver_form input[type="tel"] {
   border: none;
   border-bottom: 1px solid #ddd;
   outline: none;
@@ -84,13 +85,13 @@
   margin-bottom: 20px;
 }
 
-.truck_form input[type="text"]:focus,
-.truck_form input[type="date"]:focus,
-.truck_form input[type="tel"]:focus {
+.driver_form input[type="text"]:focus,
+.driver_form input[type="date"]:focus,
+.driver_form input[type="tel"]:focus {
   border-bottom: 1px solid #007bff;
 }
 
-.truck_form button[type="submit"] {
+.driver_form button[type="submit"] {
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -100,6 +101,6 @@
   cursor: pointer;
 }
 
-.truck_form button[type="submit"]:hover {
+.driver_form button[type="submit"]:hover {
   background-color: #0069d9;
 }

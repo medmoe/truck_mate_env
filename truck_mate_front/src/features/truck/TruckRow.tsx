@@ -1,6 +1,7 @@
 import React from 'react';
 import {TruckInfo} from "../../types/types";
 import styles from './Truck.module.css';
+import writing_icon from "../../assets/icons/writing.png";
 
 export function TruckRow (props: TruckInfo) {
     return (
@@ -12,6 +13,7 @@ export function TruckRow (props: TruckInfo) {
                 <li>{props.mileage}</li>
                 <li>{props.capacity}</li>
                 <li>{props.starting_date}</li>
+                <li><img src={writing_icon} alt="edit-info" title="edit"/></li>
             </ul>
         </div>
     )

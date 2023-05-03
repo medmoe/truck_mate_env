@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Dashboard.module.css';
+import {Link} from "react-router-dom";
 
 export function NavigationBar() {
     return (
@@ -11,7 +12,7 @@ export function NavigationBar() {
                 <ul className={styles.menu}>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
+                    <li><Link to="/dashboard" ><a href="#">Services</a></Link></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="#">Logout</a></li>
                 </ul>

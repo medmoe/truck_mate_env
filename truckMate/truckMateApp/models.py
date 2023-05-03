@@ -10,6 +10,7 @@ class Driver(models.Model):
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField()
     address = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=50)
     starting_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
 

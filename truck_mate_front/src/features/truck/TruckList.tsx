@@ -50,6 +50,7 @@ export function TruckList() {
                             <li><b>Mileage</b></li>
                             <li><b>Capacity</b></li>
                             <li><b>Starting Date</b></li>
+                            <li></li>
                         </ul>
                     </div>
                     {trucks.map((truck) => {

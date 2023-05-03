@@ -1,7 +1,9 @@
 import React, {FormEvent, useState} from 'react';
+import styles from './Truck.module.css';
 import {TruckInfo} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {NavigationBar} from "../dashboard/NavigationBar";
 
 export function TruckForm() {
     let user_id = localStorage.getItem("user_id");
@@ -45,7 +47,8 @@ export function TruckForm() {
     }
     return (
         <div>
-            <form>
+            <NavigationBar />
+            <form className={styles.truck_form}>
                 <div className="mb-3">
                     <label htmlFor="model" className="form-label">Model</label>
                     <input onChange={handleChange} type="text" className="form-control" id="model" name="model"
@@ -76,7 +79,7 @@ export function TruckForm() {
                     <input onChange={handleChange} type="number" className="form-control" id="capacity" name="capacity"
                            required/>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Add</button>
+                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
             </form>
 
         </div>

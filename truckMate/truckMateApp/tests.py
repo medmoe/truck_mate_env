@@ -39,6 +39,7 @@ class DriverViewTestCase(APITestCase):
             "last_name": "Doe",
             "date_of_birth": "1990-01-01",
             "address": "123 Main st",
+            "phone_number": "555-555-5555",
             "starting_date": "2022-01-01",
             "end_date": "2023-01-01"
         }
