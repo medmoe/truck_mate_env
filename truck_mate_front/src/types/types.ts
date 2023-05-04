@@ -30,3 +30,13 @@ export interface PerformanceInfo {
     starting_time: string,
     ending_time: string,
 }
+export interface CostInfo {
+    id?: number,
+    owner?: number | null,
+    driver: number,
+    truck: number,
+    date: string,
+    gaz_refill: number,
+    maintenance: number,
+    description: string,
+}

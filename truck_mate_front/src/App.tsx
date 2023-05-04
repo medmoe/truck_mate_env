@@ -12,6 +12,9 @@ import {DriverForm} from "./features/driver/DriverForm";
 import {PerformanceList} from "./features/performance/PerformanceList";
 import {PerformanceDetail} from "./features/performance/PerformanceDetail";
 import {PerformanceForm} from "./features/performance/PerformanceForm";
+import {CostList} from "./features/cost/CostList";
+import {CostDetail} from "./features/cost/CostDetail";
+import {CostForm} from "./features/cost/CostForm";
 
 function App() {
   return (
@@ -32,6 +35,10 @@ function App() {
             <Route path="/performance-list" element={<PerformanceList />} />
             <Route path="/performance-detail" element={<PerformanceDetail />} />
             <Route path="/add-performance" element={<PerformanceForm />} />
+            {/* Cost routes */}
+            <Route path="/cost-list" element={<CostList />} />
+            <Route path="/cost-detail" element={<CostDetail /> } />
+            <Route path="/add-cost" element={<CostForm />} />
         </Routes>
     </Router>
   );
