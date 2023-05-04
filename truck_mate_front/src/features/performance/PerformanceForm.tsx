@@ -4,13 +4,15 @@ import {PerformanceInfo} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
+import {useAppSelector} from "../../hooks";
+import {selectDrivers, selectTrucks, selectUserId} from "../user/userSlice";
 
 export function PerformanceForm() {
-    const user_id = localStorage.getItem("user_id");
-    const drivers = [1,2,3,4];
-    const trucks = [1,2,3,4];
+    const user_id = useAppSelector(selectUserId);
+    const drivers = useAppSelector(selectDrivers);
+    const trucks = useAppSelector(selectTrucks);
     let initState: PerformanceInfo = {
-        "owner": user_id ? parseInt(user_id, 10) : null,
+        "owner": user_id,
         "driver": 0,
         "truck": 0,
         "date": "",
@@ -22,29 +24,30 @@ export function PerformanceForm() {
     const [performanceData, setPerformanceData] = useState(initState);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
+    const numberProperties = ['truck', 'driver', 'starting_quantity', 'ending_quantity', 'starting_mileage', 'ending_mileage'];
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        if (performanceData.owner) {
-            axios.post("http://localhost:8000/performace/", JSON.stringify(performanceData), {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${token}`,
-                }, withCredentials: true
+        console.log(performanceData);
+        axios.post("http://localhost:8000/performance/", JSON.stringify(performanceData), {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${token}`,
+            }, withCredentials: true
+        })
+            .then((res) => {
+                navigate("/performance-list");
             })
-                .then((res) => {
-                    navigate("/performance-list");
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
-        }
+            .catch((err) => {
+                console.log(err);
+            })
+
     }
     const handleChange = (event: FormEvent) => {
         event.preventDefault();
-        const target = event.target as HTMLInputElement
+        const {name, value} = event.target as HTMLInputElement
         setPerformanceData({
             ...performanceData,
-            [target.name]: target.value
+            [name]: numberProperties.includes(name)? +value : value,
         })
     }
     return (
@@ -55,35 +58,39 @@ export function PerformanceForm() {
                     <label htmlFor="driver" className="form-label">Driver</label>
                     <select onChange={handleChange} className="form-select" id="driver" name="driver" required>
                         <option value="">Select a driver</option>
-                        {/*/!* Loop over the drivers array and create an option for each driver *!/*/}
-                        {/*{drivers.map((driver) => (*/}
-                        {/*    <option key={driver.id} value={driver.id}>*/}
-                        {/*        {driver.first_name} {driver.last_name}*/}
-                        {/*    </option>*/}
-                        {/*))}*/}
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                        {/* Loop over the drivers array and create an option for each driver */}
+                        {drivers.map((driver) => (
+                            <option key={driver.id} value={driver.id}>
+                                {driver.first_name} {driver.last_name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="truck" className="form-label">Truck</label>
                     <select onChange={handleChange} className="form-select" id="truck" name="truck" required>
                         <option value="">Select a truck</option>
-                        {/*/!* Loop over the trucks array and create an option for each truck *!/*/}
-                        {/*{trucks.map((truck) => (*/}
-                        {/*    <option key={truck.id} value={truck.id}>*/}
-                        {/*        {truck.brand} {truck.model}*/}
-                        {/*    </option>*/}
-                        {/*))}*/}
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                        {/* Loop over the trucks array and create an option for each truck */}
+                        {trucks.map((truck) => (
+                            <option key={truck.id} value={truck.id}>
+                                {truck.brand} {truck.model}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="date" className="form-label">Date</label>
                     <input onChange={handleChange} type="date" className="form-control" id="date" name="date" required/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="starting_mileage" className="form-label">Starting mileage</label>
+                    <input onChange={handleChange} type="number" className="form-control" id="starting_mileage"
+                           name="starting_mileage" required/>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="ending_mileage" className="form-label">Ending mileage</label>
+                    <input onChange={handleChange} type="number" className="form-control" id="ending_mileage"
+                           name="ending_mileage" required/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="starting_quantity" className="form-label">Starting Quantity</label>

@@ -2,6 +2,8 @@ import React, {FormEvent, useEffect, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import axios from "axios";
 import {LoginForm} from "./LoginForm";
+import {useAppDispatch} from "../../../hooks";
+import {updateDrivers, updateTrucks, updateUserId} from "../userSlice";
 
 interface UserInfo {
     username: string,
@@ -13,7 +15,8 @@ export function Login() {
         "username": "",
         "password": "",
     }
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
     const [userInfo, setUserInfo] = useState(initialState);
 
     const handleSubmit = async (event: FormEvent) => {
@@ -26,7 +29,9 @@ export function Login() {
         }
         await axios.post("http://localhost:8000/login/", JSON.stringify(userInfo), options)
             .then((res) => {
-                localStorage.setItem("user_id", res.data.user_id);
+                dispatch(updateUserId(res.data.user_id));
+                dispatch(updateDrivers(res.data.drivers));
+                dispatch(updateTrucks(res.data.trucks));
                 localStorage.setItem("token", res.data.token)
                 navigate('/dashboard')
             })

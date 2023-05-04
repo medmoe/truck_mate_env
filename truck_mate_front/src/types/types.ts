@@ -1,6 +1,6 @@
 export interface TruckInfo {
     id?:number,
-    owner?: number | null;
+    owner?: number;
     model: string,
     brand: string,
     starting_date: string,
@@ -10,7 +10,7 @@ export interface TruckInfo {
 }
 export interface DriverInfo {
     id?:number,
-    owner?: number | null,
+    owner?: number,
     first_name: string,
     last_name: string,
     date_of_birth: string,
@@ -21,7 +21,7 @@ export interface DriverInfo {
 }
 export interface PerformanceInfo {
     id?: number,
-    owner?: number | null,
+    owner?: number,
     driver: number,
     truck: number,
     date: string,
@@ -32,7 +32,7 @@ export interface PerformanceInfo {
 }
 export interface CostInfo {
     id?: number,
-    owner?: number | null,
+    owner?: number,
     driver: number,
     truck: number,
     date: string,

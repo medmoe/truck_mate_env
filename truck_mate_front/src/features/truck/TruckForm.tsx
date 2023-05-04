@@ -4,12 +4,13 @@ import {TruckInfo} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
+import {useAppSelector} from "../../hooks";
+import {selectUserId} from "../user/userSlice";
 
 export function TruckForm() {
-    let user_id = localStorage.getItem("user_id");
-
+    const user_id = useAppSelector(selectUserId);
     let initState: TruckInfo = {
-        "owner": user_id ? parseInt(user_id, 10) : null,
+        "owner": user_id,
         "brand": "",
         "model": "",
         "starting_date": "",

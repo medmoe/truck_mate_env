@@ -4,13 +4,15 @@ import {CostInfo} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
+import {useAppSelector} from "../../hooks";
+import {selectDrivers, selectTrucks, selectUserId} from "../user/userSlice";
 
 export function CostForm () {
-    const user_id = localStorage.getItem("user_id");
-    const drivers = [1,2,3,4]
-    const trucks = [1,2,3,4]
+    const user_id = useAppSelector(selectUserId);
+    const drivers = useAppSelector(selectDrivers);
+    const trucks = useAppSelector(selectTrucks);
     let initState: CostInfo = {
-        "owner": user_id ? parseInt(user_id, 10): null,
+        "owner": user_id,
         "driver": 0,
         "truck": 0,
         "date": "",
@@ -21,6 +23,7 @@ export function CostForm () {
     const [costData, setCostData] = useState(initState);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
+    const numberProperties = ['driver', 'truck', 'gaz_refill', 'maintenance']
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (costData.owner) {
@@ -40,10 +43,10 @@ export function CostForm () {
     }
     const handleChange = (event: FormEvent) => {
         event.preventDefault();
-        const target = event.target as HTMLInputElement
+        const {name, value} = event.target as HTMLInputElement
         setCostData({
             ...costData,
-            [target.name]: target.value
+            [name]: numberProperties.includes(name)? +value:value,
         })
     }
     return (
@@ -54,16 +57,22 @@ export function CostForm () {
                     <label htmlFor="driver" className="form-label">Driver</label>
                     <select onChange={handleChange} className="form-select" id="driver" name="driver" required>
                         <option value="">Select a driver</option>
-                        <option>1</option>
-                        <option>2</option>
+                        {drivers.map((driver) => (
+                            <option key={driver.id} value={driver.id}>
+                                {driver.first_name} {driver.last_name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="truck" className="form-label">Truck</label>
                     <select onChange={handleChange} className="form-select" id="truck" name="truck" required>
                         <option value="">Select a truck</option>
-                        <option>1</option>
-                        <option>2</option>
+                        {trucks.map((truck) => (
+                            <option key={truck.id} value={truck.id}>
+                                {truck.brand} {truck.model}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mb-3">

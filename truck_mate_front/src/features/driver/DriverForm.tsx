@@ -4,11 +4,13 @@ import {useNavigate} from "react-router-dom";
 import {DriverInfo} from "../../types/types";
 import axios from "axios";
 import {NavigationBar} from "../dashboard/NavigationBar";
+import {useAppSelector} from "../../hooks";
+import {selectUserId} from "../user/userSlice";
 
 export function DriverForm() {
-    const user_id = localStorage.getItem("user_id");
+    const user_id = useAppSelector(selectUserId);
     let initState: DriverInfo = {
-        "owner": user_id ? parseInt(user_id, 10): null,
+        "owner": user_id,
         "first_name": "",
         "last_name": "",
         "date_of_birth": "",
