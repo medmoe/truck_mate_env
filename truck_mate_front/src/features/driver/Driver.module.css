@@ -1,0 +1,106 @@
+.driver_list_container {
+    background-color: #eaeaea;
+    border: 1px solid #eaeaea;
+}
+
+.header {
+    background-color: #FFFFFF;
+    margin: 30px 20px;
+    padding: 10px 5px;
+}
+
+.body {
+    background-color: #FFFFFF;
+    margin: 30px 20px;
+}
+
+.btn {
+    padding: 5px 10px;
+    width: 150px;
+    background-color: #0275d8;
+    color: #FFFFFF;
+    cursor: pointer;
+    border: none;
+    font-size: 1em;
+    font-weight: bold;
+}
+.btn:hover{
+    background-color: #016cc7;
+}
+
+.driver_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+}
+
+.driver_row ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+}
+
+.driver_row ul li {
+    flex-basis: calc(100% / 7);
+    text-align: center;
+}
+
+.driver_row ul li img {
+    width: 25px;
+}
+
+.truck_row:hover {
+    background-color: #f5f5f5;
+}
+
+.driver_form {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.driver_form label {
+  font-weight: bold;
+}
+
+.driver_form input[type="text"],
+.driver_form input[type="date"],
+.driver_form input[type="tel"] {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  outline: none;
+  padding: 8px 0;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.driver_form input[type="text"]:focus,
+.driver_form input[type="date"]:focus,
+.driver_form input[type="tel"]:focus {
+  border-bottom: 1px solid #007bff;
+}
+
+.driver_form button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.driver_form button[type="submit"]:hover {
+  background-color: #0069d9;
+}

@@ -10,17 +10,17 @@ export function SignUpForm(props: Props) {
         <div>
             <form onSubmit={props.handleSubmit}>
                 <label htmlFor="first_name">First name: </label>
-                <input type="text" id="first_name" name="first_name" onChange={props.handleChange}/>
+                <input type="text" id="first_name" name="first_name" onChange={props.handleChange} required/>
                 <label htmlFor="last_name">Last name: </label>
-                <input type="text" id="last_name" name="last_name" onChange={props.handleChange}/>
+                <input type="text" id="last_name" name="last_name" onChange={props.handleChange} required/>
                 <label htmlFor="email">Email: </label>
-                <input type="email" id="email" name="email" onChange={props.handleChange} />
+                <input type="email" id="email" name="email" onChange={props.handleChange} required />
                 <label htmlFor="username">Username: </label>
-                <input type="text" id="username" name="username" onChange={props.handleChange} />
+                <input type="text" id="username" name="username" onChange={props.handleChange} required />
                 <label htmlFor="pass1">Password: </label>
-                <input type="password" id="password" name="password" onChange={props.handleChange} />
+                <input type="password" id="password" name="password" onChange={props.handleChange} required />
                 <label htmlFor="pass2">Renter password: </label>
-                <input type="password" id="pass2" name="pass2" onChange={props.handleChange} />
+                <input type="password" id="pass2" name="pass2" onChange={props.handleChange} required />
                 <input className={styles.submit_btn} type="submit" value="submit" id="submit_btn" />
             </form>
         </div>

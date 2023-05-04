@@ -2,6 +2,8 @@ import React, {FormEvent, useEffect, useState} from "react";
 import axios from "axios";
 import {SignUpForm} from "./SignUpForm";
 import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../../hooks";
+import {updateDrivers, updateUserId, updateTrucks} from "../userSlice";
 
 interface UserInfo {
     first_name: string,
@@ -24,13 +26,10 @@ export function SignUp() {
     const [userInfo, setUserInfo] = useState(initialState);
     const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        if (!userInfo.username || !userInfo.email || !userInfo.password){
-            setErrorMessage("Please fill the fields!")
-            return;
-        }
         if (userInfo.password !== userInfo.pass2) {
             setErrorMessage("Password didn't match!")
             return;
@@ -44,7 +43,10 @@ export function SignUp() {
         delete userInfo.pass2;
         await axios.post("http://localhost:8000/signup/", JSON.stringify(userInfo), options)
             .then((res) => {
-                localStorage.setItem('token', res.data.token);
+                dispatch(updateDrivers(res.data.drivers));
+                dispatch(updateTrucks(res.data.trucks));
+                dispatch(updateUserId(res.data.user_id));
+                localStorage.setItem("token", res.data.token)
                 navigate('/dashboard')
 
             })

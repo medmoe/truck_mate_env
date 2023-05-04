@@ -1,3 +1,15 @@
+img {
+    cursor: pointer;
+    width: 100px;
+}
+.images_container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10% 20%;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+
+}
 .nav_bar {
     display: flex;
     justify-content: space-between;
