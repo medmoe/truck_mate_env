@@ -12,7 +12,7 @@ class Driver(models.Model):
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=50)
     starting_date = models.DateField()
-    end_date = models.DateField(null=True, blank=True)
+    ending_date = models.DateField(null=True, blank=True)
 
 
 class Truck(models.Model):

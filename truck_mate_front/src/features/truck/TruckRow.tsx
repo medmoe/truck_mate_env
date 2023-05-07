@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {TruckInfo} from "../../types/types";
 import styles from './Truck.module.css';
 import writing_icon from "../../assets/icons/writing.png";
@@ -14,12 +14,11 @@ import {
     updateYear,
     updateId
 } from "./truckSlice";
-import {Link} from "react-router-dom";
 
 export function TruckRow(props: TruckInfo) {
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
-    const updateTruckInfo = () => {
+    const updateTruckState = () => {
         dispatch(updateIsCreate(false));
         dispatch(updateBrand(props.brand));
         dispatch(updateModel(props.model));
@@ -41,7 +40,7 @@ export function TruckRow(props: TruckInfo) {
                 <li>{props.mileage}</li>
                 <li>{props.capacity}</li>
                 <li>{props.starting_date}</li>
-                <li><img src={writing_icon} alt="edit-info" title="edit" onClick={updateTruckInfo}/></li>
+                <li><img src={writing_icon} alt="edit-info" title="edit" onClick={updateTruckState}/></li>
             </ul>
         </div>
     )

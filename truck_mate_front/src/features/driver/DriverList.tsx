@@ -1,13 +1,21 @@
 import React, {useState, useEffect} from "react";
 import {NavigationBar} from "../dashboard/NavigationBar";
 import styles from './Driver.module.css';
-import {Link} from "react-router-dom";
 import {DriverInfo} from "../../types/types";
 import axios from "axios";
 import {DriverRow} from "./DriverRow";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks";
+import {updateIsCreate} from "./driverSlice";
 
 export function DriverList() {
-    const [drivers, setDrivers] = useState<DriverInfo[]>([])
+    const [drivers, setDrivers] = useState<DriverInfo[]>([]);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const updateDriverState = () => {
+        dispatch(updateIsCreate(true));
+        navigate("/add-driver");
+    }
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchDrivers = async () => {
@@ -32,9 +40,7 @@ export function DriverList() {
             <NavigationBar/>
             <div className={styles.driver_list_container}>
                 <div className={styles.header}>
-                    <Link to="/add-driver">
-                        <button className={styles.btn}>Add Driver</button>
-                    </Link>
+                    <button className={styles.btn} onClick={updateDriverState}>Add Driver</button>
                 </div>
                 <div className={styles.body}>
                     <div className={styles.driver_row}>
@@ -59,6 +65,7 @@ export function DriverList() {
                                            phone_number={driver.phone_number}
                                            starting_date={driver.starting_date}
                                            ending_date={driver.ending_date}
+                                           id={driver.id}
                                 />
                             </React.Fragment>
                         )

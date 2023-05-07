@@ -12,6 +12,7 @@ export interface TruckInfo {
 export interface DriverInfo {
     id?:number,
     owner?: number,
+    isCreate?: boolean,
     first_name: string,
     last_name: string,
     date_of_birth: string,
