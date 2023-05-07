@@ -1,3 +1,7 @@
+:root{
+    --main-btn-color: #007bff;
+    --btn-delete: #bb2124;
+}
 .truck_list_container {
     background-color: #eaeaea;
     border: 1px solid #eaeaea;
@@ -24,6 +28,7 @@
     font-size: 1em;
     font-weight: bold;
 }
+
 .btn:hover{
     background-color: #016cc7;
 }
@@ -91,7 +96,7 @@
 }
 
 .truck_form button[type="submit"] {
-  background-color: #007bff;
+  background-color: var(--main-btn-color);
   color: #fff;
   border: none;
   border-radius: 20px;

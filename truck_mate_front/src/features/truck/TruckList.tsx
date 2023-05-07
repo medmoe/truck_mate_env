@@ -4,19 +4,21 @@ import axios from "axios";
 import {TruckInfo} from "../../types/types";
 import {TruckRow} from "./TruckRow";
 import styles from './Truck.module.css';
-import {Link} from "react-router-dom";
-
+import {useAppDispatch} from "../../hooks";
+import {updateIsCreate} from "./truckSlice";
+import {useNavigate} from "react-router-dom";
 
 export function TruckList() {
-    const [trucks, setTrucks] = useState<TruckInfo[]>([])
-
+    const [trucks, setTrucks] = useState<TruckInfo[]>([]);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchTrucks = async () => {
             axios.get("http://localhost:8000/trucks/", {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization : `Token ${token}`,
+                    Authorization: `Token ${token}`,
                 },
                 withCredentials: true
             })
@@ -30,15 +32,16 @@ export function TruckList() {
 
         fetchTrucks();
     }, []);
-
+    const updateTruckState = () => {
+        dispatch(updateIsCreate(true));
+        navigate("/add-truck");
+    }
     return (
         <div>
             <NavigationBar/>
             <div className={styles.truck_list_container}>
                 <div className={styles.header}>
-                    <Link to="/add-truck">
-                        <button className={styles.btn}>Add Truck</button>
-                    </Link>
+                    <button className={styles.btn} onClick={updateTruckState}>Add Truck</button>
                 </div>
                 <div className={styles.body}>
                     <div className={styles.truck_row}>

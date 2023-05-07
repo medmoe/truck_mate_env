@@ -43,7 +43,6 @@ export function TruckForm() {
     const token = localStorage.getItem("token");
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault()
-        console.log(truckData.owner)
         if (truckData.owner) {
             if (isCreate) {
                 axios.post("http://localhost:8000/trucks/", JSON.stringify(truckData), {
@@ -81,6 +80,25 @@ export function TruckForm() {
             ...truckData,
             [target.name]: target.value
         })
+    }
+    const deleteItem = (event: FormEvent) => {
+        event.preventDefault();
+        axios.delete(`http://localhost:8000/trucks/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`
+            }, withCredentials: true
+        })
+            .then((res) => {
+                navigate("/truck-list");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    const cancelEdit = (event: FormEvent) => {
+        event.preventDefault();
+        navigate("/truck-list");
     }
     return (
         <div>
@@ -121,7 +139,12 @@ export function TruckForm() {
                            defaultValue={capacity}
                            required/>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                <div className="mb-3">
+                    <button type="submit" onClick={handleSubmit}>Submit</button>
+                    <button type="submit" onClick={cancelEdit}>Cancel</button>
+                    {!isCreate ?
+                        <button type="submit" onClick={deleteItem} style={{backgroundColor: "#bb2124"}}>Delete</button> : <></>}
+                </div>
             </form>
 
         </div>
