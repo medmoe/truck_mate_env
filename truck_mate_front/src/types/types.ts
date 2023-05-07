@@ -24,9 +24,12 @@ export interface DriverInfo {
 export interface PerformanceInfo {
     id?: number,
     owner?: number,
+    isCreate?: boolean,
     driver: number,
     truck: number,
     date: string,
+    starting_mileage: number,
+    ending_mileage: number,
     starting_quantity: number,
     ending_quantity: number,
     starting_time: string,

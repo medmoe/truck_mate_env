@@ -4,10 +4,15 @@ import axios from "axios";
 import {PerformanceInfo} from "../../types/types";
 import {PerformanceRow} from "./PerformanceRow";
 import styles from './Performance.module.css';
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks";
+import {updateIsCreate} from "./performanceSlice";
 
 export function PerformanceList() {
     const [performances, setPerformances] = useState<PerformanceInfo[]>([]);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchPerformances = async () => {
@@ -27,14 +32,16 @@ export function PerformanceList() {
         }
         fetchPerformances();
     }, [])
+    const updatePerformanceState = () => {
+        dispatch(updateIsCreate(true));
+        navigate("/add-performance");
+    }
     return (
         <div>
             <NavigationBar/>
             <div className={styles.performance_list_container}>
                 <div className={styles.header}>
-                    <Link to="/add-performance">
-                        <button className={styles.btn}>Add Performance</button>
-                    </Link>
+                    <button className={styles.btn} onClick={updatePerformanceState}>Add Performance</button>
                 </div>
                 <div className={styles.body}>
                     <div className={styles.performance_row}>
@@ -42,10 +49,12 @@ export function PerformanceList() {
                             <li><b>Driver</b></li>
                             <li><b>Truck</b></li>
                             <li><b>Date</b></li>
-                            <li><b>Starting quantity</b></li>
-                            <li><b>Ending quantity</b></li>
-                            <li><b>Starting time</b></li>
-                            <li><b>Ending time</b></li>
+                            <li><b>Starting Km</b></li>
+                            <li><b>Ending Km</b></li>
+                            <li><b>Starting Qty/L</b></li>
+                            <li><b>Ending Qty/L</b></li>
+                            <li><b>Starting T</b></li>
+                            <li><b>Ending T</b></li>
                             <li></li>
                         </ul>
                     </div>
@@ -58,7 +67,10 @@ export function PerformanceList() {
                                                     starting_quantity={performance.starting_quantity}
                                                     ending_quantity={performance.ending_quantity}
                                                     starting_time={performance.starting_time}
-                                                    ending_time={performance.ending_time}/>
+                                                    ending_time={performance.ending_time}
+                                                    id={performance.id}
+                                                    starting_mileage={performance.starting_mileage}
+                                                    ending_mileage={performance.ending_mileage}/>
                                 </React.Fragment>
                             )
                         })

@@ -48,7 +48,7 @@
 }
 
 .performance_row ul li {
-    flex-basis: calc(100% / 7);
+    flex-basis: calc(100% / 10);
     text-align: center;
 }
 .performance_row ul li img {
