@@ -1,11 +1,12 @@
 import {configureStore, ThunkAction, Action} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
-import rootReducer from "./rootReducer";
 import userReducer from '../src/features/user/userSlice';
+import truckReducer from '../src/features/truck/truckSlice';
 
 export const store = configureStore({
         reducer: {
             user: userReducer,
+            truck: truckReducer,
         }
 });
 

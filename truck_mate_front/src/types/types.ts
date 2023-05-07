@@ -1,6 +1,7 @@
 export interface TruckInfo {
     id?:number,
     owner?: number;
+    isCreate?: boolean;
     model: string,
     brand: string,
     starting_date: string,
