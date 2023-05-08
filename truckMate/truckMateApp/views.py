@@ -14,6 +14,7 @@ from .serializers import (
     PerformanceSerializer,
     CostSerializer,
 )
+from .permissions import IsOwnerOrReadOnly
 
 
 class SignUpView(APIView):
@@ -64,49 +65,55 @@ class LoginView(APIView):
 
 class DriverList(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
 
 
 class DriverDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
 
 
 class TruckList(generics.ListCreateAPIView):
     authentication_classes = [TokenAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Truck.objects.all()
     serializer_class = TruckSerializer
 
 
 class TruckDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Truck.objects.all()
     serializer_class = TruckSerializer
 
 
 class PerformanceList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Performance.objects.all()
     serializer_class = PerformanceSerializer
 
 
 class PerformanceDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Performance.objects.all()
     serializer_class = PerformanceSerializer
 
 
 class CostList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
 
 
 class CostDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     queryset = Cost.objects.all()
     serializer_class = CostSerializer
