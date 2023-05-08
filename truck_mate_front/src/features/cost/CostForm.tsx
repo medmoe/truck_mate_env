@@ -6,19 +6,39 @@ import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
 import {useAppSelector} from "../../hooks";
 import {selectDrivers, selectTrucks, selectUserId} from "../user/userSlice";
+import {
+    selectIsCreate,
+    selectDate,
+    selectDescription,
+    selectDriver,
+    selectGazRefill,
+    selectId,
+    selectMaintenance,
+    selectTruck,
+} from "./costSlice";
 
-export function CostForm () {
+export function CostForm() {
+    /* cost state info */
+    const id = useAppSelector(selectId);
+    const isCreate = useAppSelector(selectIsCreate);
+    const driver = useAppSelector(selectDriver);
+    const truck = useAppSelector(selectTruck);
+    const date = useAppSelector(selectDate);
+    const gazRefill = useAppSelector(selectGazRefill);
+    const maintenance = useAppSelector(selectMaintenance);
+    const description = useAppSelector(selectDescription);
+
     const user_id = useAppSelector(selectUserId);
     const drivers = useAppSelector(selectDrivers);
     const trucks = useAppSelector(selectTrucks);
     let initState: CostInfo = {
         "owner": user_id,
-        "driver": 0,
-        "truck": 0,
-        "date": "",
-        "gaz_refill": 0,
-        "maintenance": 0,
-        "description": "",
+        "driver": driver,
+        "truck": truck,
+        "date": date,
+        "gaz_refill": gazRefill,
+        "maintenance": maintenance,
+        "description": description,
     }
     const [costData, setCostData] = useState(initState);
     const navigate = useNavigate();
@@ -27,18 +47,33 @@ export function CostForm () {
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (costData.owner) {
-            axios.post("http://localhost:8000/cost/", JSON.stringify(costData), {
-                headers: {
-                    "Content-Type" : "application/json",
-                    Authorization: `Token ${token}`,
-                }, withCredentials: true
-            })
-                .then((res) => {
-                    navigate("/cost-list");
+            if (isCreate) {
+                axios.post("http://localhost:8000/cost/", JSON.stringify(costData), {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${token}`,
+                    }, withCredentials: true
                 })
-                .catch((err) => {
-                    console.log(err);
+                    .then((res) => {
+                        navigate("/cost-list");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            } else {
+                axios.put(`http://localhost:8000/cost/${id}/`, JSON.stringify(costData), {
+                    headers: {
+                        'Content-Type': "application/json",
+                        Authorization: `Token ${token}`,
+                    }, withCredentials: true
                 })
+                    .then((res) => {
+                        navigate("/cost-list");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
         }
     }
     const handleChange = (event: FormEvent) => {
@@ -46,12 +81,31 @@ export function CostForm () {
         const {name, value} = event.target as HTMLInputElement
         setCostData({
             ...costData,
-            [name]: numberProperties.includes(name)? +value:value,
+            [name]: numberProperties.includes(name) ? +value : value,
         })
+    }
+    const deleteItem = (event: FormEvent) => {
+        event.preventDefault();
+        axios.delete(`http://localhost:8000/cost/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+            }, withCredentials: true
+        })
+            .then((res) => {
+                navigate("/cost-list");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    const cancelEdit = (event: FormEvent) => {
+        event.preventDefault();
+        navigate('/cost-list');
     }
     return (
         <div>
-            <NavigationBar />
+            <NavigationBar/>
             <form className={styles.cost_form}>
                 <div className="mb-3">
                     <label htmlFor="driver" className="form-label">Driver</label>
@@ -77,21 +131,33 @@ export function CostForm () {
                 </div>
                 <div className="mb-3">
                     <label htmlFor="date" className="form-label">Date</label>
-                    <input onChange={handleChange} type="date" className="form-control" id="date" name="date" required />
+                    <input onChange={handleChange} type="date" className="form-control" id="date" name="date"
+                           defaultValue={date} required/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="gaz_refill" className="form-label">Gaz</label>
-                    <input onChange={handleChange} type="number" className="form-control" id="gaz_refill" name="gaz_refill" required />
+                    <input onChange={handleChange} type="number" className="form-control" id="gaz_refill"
+                           name="gaz_refill" defaultValue={gazRefill} required/>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="maintenance" className="form-label">Maintenance</label>
-                    <input onChange={handleChange} type="number" className="form-control" id="maintenance" name="maintenance" required />
+                    <input onChange={handleChange} type="number" className="form-control" id="maintenance"
+                           name="maintenance" defaultValue={maintenance} required/>
                 </div>
-                <div className="mb-3" >
+                <div className="mb-3">
                     <label htmlFor="description" className="form-label">Description</label>
-                    <textarea onChange={handleChange} className="form-control" id="description" name="description" />
+                    <textarea onChange={handleChange} className="form-control" id="description" name="description"
+                              defaultValue={description}/>
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                <div className="mb-3">
+                    <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                    <button type="submit" onClick={cancelEdit}>Cancel</button>
+                    {
+                        isCreate ? <></> : <button type="submit" onClick={deleteItem}
+                                                   style={{backgroundColor: "#bb2124"}}>Delete</button>
+                    }
+
+                </div>
             </form>
         </div>
     )

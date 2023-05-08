@@ -45,4 +45,4 @@ class Cost(models.Model):
     date = models.DateField()
     gaz_refill = models.FloatField()
     maintenance = models.FloatField()
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)

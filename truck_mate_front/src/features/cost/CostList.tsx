@@ -4,10 +4,15 @@ import axios from "axios";
 import {CostInfo} from "../../types/types";
 import {CostRow} from "./CostRow";
 import styles from './Cost.module.css';
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {useAppDispatch} from "../../hooks";
+import {updateIsCreate} from "./costSlice";
 
 export function CostList() {
     const [costs, setCosts] = useState<CostInfo[]>([]);
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchCosts = async () => {
@@ -27,14 +32,17 @@ export function CostList() {
         }
         fetchCosts();
     }, []);
+
+    const updateCostState = () => {
+        dispatch(updateIsCreate(true));
+        navigate("/add-cost");
+    }
     return (
         <div>
             <NavigationBar/>
             <div className={styles.cost_list_container}>
                 <div className={styles.header}>
-                    <Link to="/add-cost">
-                        <button className={styles.btn}>Add Cost</button>
-                    </Link>
+                        <button className={styles.btn} onClick={updateCostState}>Add Cost</button>
                 </div>
                 <div className={styles.body}>
                     <div className={styles.cost_row}>
@@ -58,6 +66,7 @@ export function CostList() {
                                              gaz_refill={cost.gaz_refill}
                                              maintenance={cost.maintenance}
                                              description={cost.description}
+                                             id={cost.id}
                                     />
                                 </React.Fragment>
                             );

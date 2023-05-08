@@ -4,6 +4,7 @@ import userReducer from '../src/features/user/userSlice';
 import truckReducer from '../src/features/truck/truckSlice';
 import driverReducer from '../src/features/driver/driverSlice';
 import performanceReducer from '../src/features/performance/performanceSlice';
+import costReducer from '../src/features/cost/costSlice';
 
 export const store = configureStore({
         reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
             truck: truckReducer,
             driver: driverReducer,
             performance: performanceReducer,
+            cost: costReducer,
         }
 });
 

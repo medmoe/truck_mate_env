@@ -19,7 +19,6 @@ import {
     selectStartingMileage,
     selectEndingMileage
 } from "./performanceSlice";
-import app from "../../App";
 
 export function PerformanceForm() {
     /* performance state info */
@@ -110,7 +109,7 @@ export function PerformanceForm() {
     }
     const cancelEdit = (event: FormEvent) => {
         event.preventDefault();
-        navigate("performance-list");
+        navigate("/performance-list");
     }
     return (
         <div>

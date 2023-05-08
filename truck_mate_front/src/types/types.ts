@@ -38,6 +38,7 @@ export interface PerformanceInfo {
 export interface CostInfo {
     id?: number,
     owner?: number,
+    isCreate?: boolean,
     driver: number,
     truck: number,
     date: string,
