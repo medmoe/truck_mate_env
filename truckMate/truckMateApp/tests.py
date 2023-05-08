@@ -41,7 +41,7 @@ class DriverViewTestCase(APITestCase):
             "address": "123 Main st",
             "phone_number": "555-555-5555",
             "starting_date": "2022-01-01",
-            "end_date": "2023-01-01"
+            "ending_date": "2023-01-01"
         }
 
         self.client.force_authenticate(user=self.user)
@@ -151,7 +151,7 @@ class PerformanceViewTestCase(APITestCase):
             date_of_birth='1990-01-01',
             address='123 Main St',
             starting_date='2021-01-01',
-            end_date=None
+            ending_date=None
         )
         self.driver2 = Driver.objects.create(
             owner=self.user,
@@ -160,7 +160,7 @@ class PerformanceViewTestCase(APITestCase):
             date_of_birth='1995-01-01',
             address='456 Main St',
             starting_date='2022-01-01',
-            end_date=None
+            ending_date=None
         )
         self.truck1 = Truck.objects.create(
             owner=self.user,
