@@ -19,7 +19,7 @@ export function PerformanceList() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchPerformances = async () => {
-            axios.get(`${API}performance?page=${1}`, {
+            await axios.get(`${API}performance?page=${1}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Token ${token}`,

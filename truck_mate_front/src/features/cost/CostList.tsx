@@ -21,7 +21,7 @@ export function CostList() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchCosts = async () => {
-            axios.get(`${API}cost?page=${1}`, {
+            await axios.get(`${API}cost?page=${1}`, {
                 headers: {
                     "Content-Type": 'application/json',
                     Authorization: `Token ${token}`,

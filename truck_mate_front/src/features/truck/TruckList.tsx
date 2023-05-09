@@ -18,7 +18,7 @@ export function TruckList() {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchTrucks = async () => {
-            axios.get(`${API}trucks?page=${currentPage}`, {
+            await axios.get(`${API}trucks?page=${currentPage}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Token ${token}`,
