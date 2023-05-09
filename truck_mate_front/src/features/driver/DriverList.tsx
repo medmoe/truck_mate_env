@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from "react";
 import {NavigationBar} from "../dashboard/NavigationBar";
 import styles from './Driver.module.css';
-import {DriverInfo} from "../../types/types";
+import {DriverInfo, API, NUM_OF_ITEMS_PER_PAGE} from "../../types/types";
 import axios from "axios";
 import {DriverRow} from "./DriverRow";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks";
 import {updateIsCreate} from "./driverSlice";
+import {Pagination} from "../../utils/Pagination";
 
 export function DriverList() {
     const [drivers, setDrivers] = useState<DriverInfo[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0)
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const updateDriverState = () => {
@@ -17,9 +20,10 @@ export function DriverList() {
         navigate("/add-driver");
     }
     useEffect(() => {
+
         const token = localStorage.getItem("token");
         const fetchDrivers = async () => {
-            axios.get("http://localhost:8000/drivers/", {
+            axios.get(`${API}drivers?page=${1}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Token ${token}`,
@@ -27,7 +31,8 @@ export function DriverList() {
                 withCredentials: true
             })
                 .then((res) => {
-                    setDrivers(res.data)
+                    setDrivers(res.data.results)
+                    setTotalPages(Math.ceil(res.data.count / NUM_OF_ITEMS_PER_PAGE));
                 })
                 .catch((err) => {
                     console.log(err)
@@ -35,6 +40,22 @@ export function DriverList() {
         }
         fetchDrivers();
     }, [])
+    const fetchDrivers = async (page: number) => {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API}drivers?page=${page}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+            },
+            withCredentials: true
+        });
+        setDrivers(response.data.results)
+        setTotalPages(Math.ceil(response.data.count / NUM_OF_ITEMS_PER_PAGE));
+        setCurrentPage(page);
+    }
+    const handlePageClick = (page: number) => {
+        fetchDrivers(page);
+    }
     return (
         <div>
             <NavigationBar/>
@@ -71,7 +92,13 @@ export function DriverList() {
                         )
                     })}
                 </div>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageClick={handlePageClick}
+                />
             </div>
+
         </div>
     )
 }

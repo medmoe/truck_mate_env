@@ -46,3 +46,6 @@ export interface CostInfo {
     maintenance: number,
     description: string,
 }
+
+export const NUM_OF_ITEMS_PER_PAGE = 20;
+export const API = 'http://localhost:8000/';
