@@ -1,10 +1,14 @@
+import json
 from datetime import date
 from django.contrib.auth.models import User
+from django.core.serializers import serialize
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
+
 from .models import Driver, Truck, Performance, Cost
 from .serializers import DriverSerializer, TruckSerializer, PerformanceSerializer, CostSerializer
+
 
 
 class AuthenticationTest(APITestCase):
@@ -62,7 +66,7 @@ class DriverViewTestCase(APITestCase):
         response = self.client.get(reverse('driver-list'))
         drivers = Driver.objects.all()
         serializer = DriverSerializer(drivers, many=True)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data['results'], serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_single_driver(self):
@@ -117,7 +121,7 @@ class TruckViewTestCase(APITestCase):
         response = self.client.get(reverse("truck-list"))
         trucks = Truck.objects.all()
         serializer = TruckSerializer(trucks, many=True)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data['results'], serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_single_truck(self):
@@ -150,6 +154,7 @@ class PerformanceViewTestCase(APITestCase):
             last_name='Doe',
             date_of_birth='1990-01-01',
             address='123 Main St',
+            phone_number="555-555-5555",
             starting_date='2021-01-01',
             ending_date=None
         )
@@ -208,7 +213,7 @@ class PerformanceViewTestCase(APITestCase):
         performances = Performance.objects.all()
         serializer = PerformanceSerializer(performances, many=True)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data['results'], serializer.data)
 
     def test_get_single_performance(self):
         response = self.client.get(reverse('performance-detail', args=[self.performance1.id]))
@@ -220,8 +225,8 @@ class PerformanceViewTestCase(APITestCase):
     def test_create_performance(self):
         data = {
             'owner': self.user.id,
-            'driver': self.driver1.id,
-            'truck': self.truck1.id,
+            'driver': DriverSerializer(self.driver1).data,
+            'truck': TruckSerializer(self.truck1).data,
             'date': date.today(),
             'starting_mileage': 6000,
             'ending_mileage': 7000,

@@ -87,7 +87,7 @@ class DriverList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Driver.objects.filter(owner=user)
+        return Driver.objects.filter(owner=user).order_by('id')
 
 
 class DriverDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -105,7 +105,7 @@ class TruckList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Truck.objects.filter(owner=user)
+        return Truck.objects.filter(owner=user).order_by('id')
 
 
 class TruckDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -123,7 +123,7 @@ class PerformanceList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Performance.objects.filter(owner=user)
+        return Performance.objects.filter(owner=user).order_by('id')
 
 
 class PerformanceDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -141,7 +141,7 @@ class CostList(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Cost.objects.filter(owner=user)
+        return Cost.objects.filter(owner=user).order_by('id')
 
 
 class CostDetail(generics.RetrieveUpdateDestroyAPIView):
