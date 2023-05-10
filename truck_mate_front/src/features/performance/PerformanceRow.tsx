@@ -40,8 +40,8 @@ export function PerformanceRow(props: PerformanceInfo) {
     return (
         <div className={styles.performance_row}>
             <ul>
-                <li>{props.driver}</li>
-                <li>{props.truck}</li>
+                <li>{props.driver.last_name}</li>
+                <li>{props.truck.brand} {props.truck.model}</li>
                 <li>{props.date}</li>
                 <li>{props.starting_mileage}</li>
                 <li>{props.ending_mileage}</li>

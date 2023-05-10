@@ -81,7 +81,8 @@ export function PerformanceList() {
                         performances.map((performance) => {
                             return (
                                 <React.Fragment key={performance.id}>
-                                    <PerformanceRow driver={performance.driver} truck={performance.truck}
+                                    <PerformanceRow driver={performance.driver}
+                                                    truck={performance.truck}
                                                     date={performance.date}
                                                     starting_quantity={performance.starting_quantity}
                                                     ending_quantity={performance.ending_quantity}

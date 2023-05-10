@@ -52,21 +52,89 @@ class DriverSerializer(serializers.ModelSerializer):
     class Meta:
         model = Driver
         fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': False, 'required': False}
+        }
 
 
 class TruckSerializer(serializers.ModelSerializer):
     class Meta:
         model = Truck
         fields = '__all__'
+        extra_kwargs = {
+            'id': {'read_only': False, 'required': False}
+        }
 
 
 class PerformanceSerializer(serializers.ModelSerializer):
+    driver = DriverSerializer()
+    truck = TruckSerializer()
+
     class Meta:
         model = Performance
         fields = '__all__'
 
+    def create(self, validated_data):
+        driver_data = validated_data.pop('driver')
+        truck_data = validated_data.pop('truck')
+        driver = Driver.objects.get(id=driver_data['id'])
+        truck = Truck.objects.get(id=truck_data['id'])
+        performance = Performance.objects.create(driver=driver, truck=truck, **validated_data)
+        return performance
+
+    def update(self, instance, validated_data):
+        instance.date = validated_data.get('date', instance.date)
+        instance.starting_mileage = validated_data.get('starting_mileage', instance.starting_mileage)
+        instance.ending_mileage = validated_data.get('ending_mileage', instance.ending_mileage)
+        instance.starting_quantity = validated_data.get('starting_quantity', instance.starting_quantity)
+        instance.ending_quantity = validated_data.get('ending_quantity', instance.ending_quantity)
+        instance.starting_time = validated_data.get('starting_time', instance.starting_time)
+        instance.ending_time = validated_data.get('ending_time', instance.ending_time)
+
+        driver_data = validated_data.get('driver')
+        if driver_data:
+            driver = Driver.objects.get(id=driver_data['id'])
+            instance.driver = driver
+
+        truck_data = validated_data.get('truck')
+        if truck_data:
+            truck = Truck.objects.get(id=truck_data['id'])
+            instance.truck = truck
+
+        instance.save()
+        return instance
+
 
 class CostSerializer(serializers.ModelSerializer):
+    driver = DriverSerializer()
+    truck = TruckSerializer()
+
     class Meta:
         model = Cost
         fields = '__all__'
+
+    def create(self, validated_data):
+        driver_data = validated_data.pop('driver')
+        truck_data = validated_data.pop('truck')
+        driver = Driver.objects.get(id=driver_data['id'])
+        truck = Truck.objects.get(id=truck_data['id'])
+        cost = Cost.objects.create(driver=driver, truck=truck, **validated_data)
+        return cost
+
+    def update(self, instance, validated_data):
+        driver_data = validated_data.get('driver')
+        if driver_data:
+            driver = Driver.objects.get(id=driver_data['id'])
+            instance.driver = driver
+        truck_data = validated_data.get('truck')
+        if truck_data:
+            truck = Truck.objects.get(id=truck_data['id'])
+            instance.truck = truck
+
+        instance.date = validated_data.get('date', instance.date)
+        instance.gaz_refill = validated_data.get('gaz_refill', instance.gaz_refill)
+        instance.maintenance = validated_data.get('maintenance', instance.maintenance)
+        instance.description = validated_data.get('description', instance.description)
+
+        instance.save()
+        return instance
