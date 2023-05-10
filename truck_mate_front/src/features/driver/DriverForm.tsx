@@ -77,7 +77,6 @@ export function DriverForm() {
     }
     const handleChange = (event: FormEvent) => {
         event.preventDefault();
-        console.log("Iam here");
         const target = event.target as HTMLInputElement
         setDriverData({
             ...driverData,

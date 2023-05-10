@@ -2,6 +2,7 @@ from django.urls import path
 from .views import (
     SignUpView,
     LoginView,
+    LogoutView,
     DriverList,
     DriverDetail,
     TruckList,
@@ -15,6 +16,7 @@ from .views import (
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     # driver urls
     path('drivers/', DriverList.as_view(), name='driver-list'),
     path('drivers/<int:pk>/', DriverDetail.as_view(), name='driver-detail'),

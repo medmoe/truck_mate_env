@@ -25,8 +25,8 @@ export interface PerformanceInfo {
     id?: number,
     owner?: number,
     isCreate?: boolean,
-    driver: number,
-    truck: number,
+    driver: DriverInfo,
+    truck: TruckInfo,
     date: string,
     starting_mileage: number,
     ending_mileage: number,
@@ -39,10 +39,13 @@ export interface CostInfo {
     id?: number,
     owner?: number,
     isCreate?: boolean,
-    driver: number,
-    truck: number,
+    driver: DriverInfo,
+    truck: TruckInfo,
     date: string,
     gaz_refill: number,
     maintenance: number,
     description: string,
 }
+
+export const NUM_OF_ITEMS_PER_PAGE = 20;
+export const API = 'http://localhost:8000/';

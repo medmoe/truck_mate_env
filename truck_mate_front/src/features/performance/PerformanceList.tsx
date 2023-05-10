@@ -1,22 +1,25 @@
 import React, {useState, useEffect} from "react";
 import {NavigationBar} from "../dashboard/NavigationBar";
 import axios from "axios";
-import {PerformanceInfo} from "../../types/types";
 import {PerformanceRow} from "./PerformanceRow";
 import styles from './Performance.module.css';
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks";
 import {updateIsCreate} from "./performanceSlice";
+import {API, NUM_OF_ITEMS_PER_PAGE, PerformanceInfo} from "../../types/types";
+import {Pagination} from "../../utils/Pagination";
 
 export function PerformanceList() {
     const [performances, setPerformances] = useState<PerformanceInfo[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchPerformances = async () => {
-            axios.get("http://localhost:8000/performance/", {
+            await axios.get(`${API}performance?page=${1}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Token ${token}`,
@@ -24,7 +27,8 @@ export function PerformanceList() {
                 withCredentials: true
             })
                 .then((res) => {
-                    setPerformances(res.data);
+                    setPerformances(res.data.results);
+                    setTotalPages(Math.ceil(res.data.count / NUM_OF_ITEMS_PER_PAGE));
                 })
                 .catch((err) => {
                     console.log(err);
@@ -32,6 +36,21 @@ export function PerformanceList() {
         }
         fetchPerformances();
     }, [])
+    const fetchPerformances = async (page: number) => {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API}performance?page=${page}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+            }, withCredentials: true
+        });
+        setPerformances(response.data.results);
+        setTotalPages(Math.ceil(response.data.count / NUM_OF_ITEMS_PER_PAGE));
+        setCurrentPage(page);
+    }
+    const handlePageClick = (page: number) => {
+        fetchPerformances(page);
+    }
     const updatePerformanceState = () => {
         dispatch(updateIsCreate(true));
         navigate("/add-performance");
@@ -62,7 +81,8 @@ export function PerformanceList() {
                         performances.map((performance) => {
                             return (
                                 <React.Fragment key={performance.id}>
-                                    <PerformanceRow driver={performance.driver} truck={performance.truck}
+                                    <PerformanceRow driver={performance.driver}
+                                                    truck={performance.truck}
                                                     date={performance.date}
                                                     starting_quantity={performance.starting_quantity}
                                                     ending_quantity={performance.ending_quantity}
@@ -76,6 +96,7 @@ export function PerformanceList() {
                         })
                     }
                 </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageClick={handlePageClick} />
             </div>
         </div>
     );

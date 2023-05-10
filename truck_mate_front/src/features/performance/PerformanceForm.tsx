@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from "react";
 import styles from './Performance.module.css';
-import {PerformanceInfo} from "../../types/types";
+import {PerformanceInfo, API} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
@@ -52,11 +52,11 @@ export function PerformanceForm() {
     const [performanceData, setPerformanceData] = useState(initState);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const numberProperties = ['truck', 'driver', 'starting_quantity', 'ending_quantity', 'starting_mileage', 'ending_mileage'];
+    const numberProperties = ['starting_quantity', 'ending_quantity', 'starting_mileage', 'ending_mileage'];
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (isCreate) {
-            axios.post("http://localhost:8000/performance/", JSON.stringify(performanceData), {
+            axios.post(`${API}performance/`, JSON.stringify(performanceData), {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Token ${token}`,
@@ -69,7 +69,7 @@ export function PerformanceForm() {
                     console.log(err);
                 })
         } else {
-            axios.put(`http://localhost:8000/performance/${id}/`, JSON.stringify(performanceData), {
+            axios.put(`${API}performance/${id}/`, JSON.stringify(performanceData), {
                 headers: {
                     'Content-Type': "application/json",
                     Authorization: `Token ${token}`,
@@ -87,14 +87,20 @@ export function PerformanceForm() {
     const handleChange = (event: FormEvent) => {
         event.preventDefault();
         const {name, value} = event.target as HTMLInputElement
+        let newValue = value
+
+        if (name === "driver" || name === "truck") {
+            newValue = JSON.parse(value);
+        }
+
         setPerformanceData({
             ...performanceData,
-            [name]: numberProperties.includes(name) ? +value : value,
+            [name]: numberProperties.includes(name) ? +newValue : newValue,
         })
     }
     const deleteItem = (event: FormEvent) => {
         event.preventDefault();
-        axios.delete(`http://localhost:8000/performance/${id}/`, {
+        axios.delete(`${API}performance/${id}/`, {
             headers: {
                 'Content-Type': "application/json",
                 Authorization: `Token ${token}`,
@@ -121,7 +127,7 @@ export function PerformanceForm() {
                         <option value="">Select a driver</option>
                         {/* Loop over the drivers array and create an option for each driver */}
                         {drivers.map((driver) => (
-                            <option key={driver.id} value={driver.id}>
+                            <option key={driver.id} value={JSON.stringify(driver)}>
                                 {driver.first_name} {driver.last_name}
                             </option>
                         ))}
@@ -133,7 +139,7 @@ export function PerformanceForm() {
                         <option value="">Select a truck</option>
                         {/* Loop over the trucks array and create an option for each truck */}
                         {trucks.map((truck) => (
-                            <option key={truck.id} value={truck.id}>
+                            <option key={truck.id} value={JSON.stringify(truck)}>
                                 {truck.brand} {truck.model}
                             </option>
                         ))}

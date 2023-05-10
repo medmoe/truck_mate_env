@@ -34,8 +34,8 @@ export function CostRow(props: CostInfo) {
     return (
         <div className={styles.cost_row}>
             <ul>
-                <li>{props.driver}</li>
-                <li>{props.truck}</li>
+                <li>{props.driver.last_name}</li>
+                <li>{props.truck.brand} {props.truck.model}</li>
                 <li>{props.date}</li>
                 <li>{props.gaz_refill}</li>
                 <li>{props.maintenance}</li>

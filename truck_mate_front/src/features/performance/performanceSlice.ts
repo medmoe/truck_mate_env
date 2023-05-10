@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {PerformanceInfo} from "../../types/types";
+import {PerformanceInfo, DriverInfo, TruckInfo} from "../../types/types";
 import {RootState} from "../../store";
 
 const initialState: PerformanceInfo = {
-    driver: 0,
-    truck: 0,
+    driver: {first_name: "", last_name: "", date_of_birth: "", address: "", phone_number: "", starting_date: "", ending_date: ""},
+    truck: {model: "", brand: "", mileage: 0, capacity: 0, starting_date: "", year: 0},
     date: "",
     starting_quantity: 0,
     ending_quantity: 0,
@@ -18,10 +18,10 @@ export const performanceSlice = createSlice({
     name: 'performance',
     initialState,
     reducers: {
-        updateDriver: (state, action: PayloadAction<number>) => {
+        updateDriver: (state, action: PayloadAction<DriverInfo>) => {
             state.driver = action.payload
         },
-        updateTruck: (state, action: PayloadAction<number>) => {
+        updateTruck: (state, action: PayloadAction<TruckInfo>) => {
             state.truck = action.payload
         },
         updateDate: (state, action: PayloadAction<string>) => {

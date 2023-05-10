@@ -7,16 +7,21 @@ import styles from './Cost.module.css';
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../hooks";
 import {updateIsCreate} from "./costSlice";
+import {API} from "../../types/types";
+import {NUM_OF_ITEMS_PER_PAGE} from "../../types/types";
+import {Pagination} from "../../utils/Pagination";
 
 export function CostList() {
     const [costs, setCosts] = useState<CostInfo[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const fetchCosts = async () => {
-            axios.get("http://localhost:8000/cost/", {
+            await axios.get(`${API}cost?page=${1}`, {
                 headers: {
                     "Content-Type": 'application/json',
                     Authorization: `Token ${token}`,
@@ -24,7 +29,8 @@ export function CostList() {
                 withCredentials: true
             })
                 .then((res) => {
-                    setCosts(res.data);
+                    setCosts(res.data.results);
+                    setTotalPages(Math.ceil(res.data.count / NUM_OF_ITEMS_PER_PAGE));
                 })
                 .catch((err) => {
                     console.log(err);
@@ -32,6 +38,23 @@ export function CostList() {
         }
         fetchCosts();
     }, []);
+
+    const fetchCosts = async (page: number) => {
+        const token = localStorage.getItem("token");
+        const response = await axios.get(`${API}cost?page=${page}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${token}`,
+            }, withCredentials: true
+        });
+        setCosts(response.data.results);
+        setTotalPages(Math.ceil(response.data.count / NUM_OF_ITEMS_PER_PAGE));
+        setCurrentPage(page);
+    }
+
+    const handlePageClick = (page: number) => {
+        fetchCosts(page);
+    }
 
     const updateCostState = () => {
         dispatch(updateIsCreate(true));
@@ -73,6 +96,7 @@ export function CostList() {
                         })
                     }
                 </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageClick={handlePageClick} />
             </div>
         </div>
     )

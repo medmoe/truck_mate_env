@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from "react";
 import styles from './Cost.module.css';
-import {CostInfo} from "../../types/types";
+import {CostInfo, API} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
@@ -43,12 +43,12 @@ export function CostForm() {
     const [costData, setCostData] = useState(initState);
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
-    const numberProperties = ['driver', 'truck', 'gaz_refill', 'maintenance']
+    const numberProperties = ['gaz_refill', 'maintenance']
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (costData.owner) {
             if (isCreate) {
-                axios.post("http://localhost:8000/cost/", JSON.stringify(costData), {
+                axios.post(`${API}cost/`, JSON.stringify(costData), {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Token ${token}`,
@@ -61,7 +61,7 @@ export function CostForm() {
                         console.log(err);
                     })
             } else {
-                axios.put(`http://localhost:8000/cost/${id}/`, JSON.stringify(costData), {
+                axios.put(`${API}cost/${id}/`, JSON.stringify(costData), {
                     headers: {
                         'Content-Type': "application/json",
                         Authorization: `Token ${token}`,
@@ -79,14 +79,18 @@ export function CostForm() {
     const handleChange = (event: FormEvent) => {
         event.preventDefault();
         const {name, value} = event.target as HTMLInputElement
+        let newValue = value
+        if (name === 'truck' || name === 'driver') {
+            newValue = JSON.parse(value);
+        }
         setCostData({
             ...costData,
-            [name]: numberProperties.includes(name) ? +value : value,
+            [name]: numberProperties.includes(name) ? +newValue : newValue,
         })
     }
     const deleteItem = (event: FormEvent) => {
         event.preventDefault();
-        axios.delete(`http://localhost:8000/cost/${id}`, {
+        axios.delete(`${API}cost/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Token ${token}`,
@@ -112,7 +116,7 @@ export function CostForm() {
                     <select onChange={handleChange} className="form-select" id="driver" name="driver" required>
                         <option value="">Select a driver</option>
                         {drivers.map((driver) => (
-                            <option key={driver.id} value={driver.id}>
+                            <option key={driver.id} value={JSON.stringify(driver)}>
                                 {driver.first_name} {driver.last_name}
                             </option>
                         ))}
@@ -123,7 +127,7 @@ export function CostForm() {
                     <select onChange={handleChange} className="form-select" id="truck" name="truck" required>
                         <option value="">Select a truck</option>
                         {trucks.map((truck) => (
-                            <option key={truck.id} value={truck.id}>
+                            <option key={truck.id} value={JSON.stringify(truck)}>
                                 {truck.brand} {truck.model}
                             </option>
                         ))}
