@@ -50,6 +50,22 @@ jobs:
           cd truck_mate_front
           npm ci
 
+      - name: Start the backend server
+        run: |
+          cd truckMate
+          python manage.py runserver
+
+      - name: Wait for the backend server to start
+        run: sleep 5
+
+      - name: Start the frontend server
+        run: |
+          cd truck_mate_front
+          npm start
+
+      - name: Wait for the frontend server to start
+        run: sleep 10
+
       - name: Run cypress tests
         run: |
           cd truck_mate_front
