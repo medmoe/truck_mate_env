@@ -53,4 +53,4 @@ jobs:
       - name: Run cypress tests
         run: |
           cd truck_mate_front
-          npm run cy:run
+          npm run cypress:run
