@@ -15,7 +15,7 @@ export function Pagination ({currentPage, totalPages, onPageClick}: PaginationPr
             <ul className="pagination">
                 {pageNumbers.map((page:number) => (
                     <li key={page} className={page === currentPage? 'page-item active': 'page-item'}>
-                        <a className="page-link" onClick={() => onPageClick(page)}>{page}</a>
+                        <p className="page-link" onClick={() => onPageClick(page)}>{page}</p>
                     </li>
                 ))}
             </ul>

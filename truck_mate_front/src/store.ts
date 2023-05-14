@@ -1,4 +1,4 @@
-import {configureStore, ThunkAction, Action} from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import {useDispatch} from "react-redux";
 import userReducer from '../src/features/user/userSlice';
 import truckReducer from '../src/features/truck/truckSlice';

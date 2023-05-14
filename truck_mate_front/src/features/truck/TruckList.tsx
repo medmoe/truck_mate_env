@@ -35,7 +35,7 @@ export function TruckList() {
         };
 
         fetchTrucks();
-    }, []);
+    }, [currentPage]);
 
     const fetchTrucks = async (page: number) => {
         const token = localStorage.getItem("token");

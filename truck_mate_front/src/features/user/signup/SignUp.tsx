@@ -1,4 +1,4 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import axios from "axios";
 import {SignUpForm} from "./SignUpForm";
 import {useNavigate} from "react-router-dom";
