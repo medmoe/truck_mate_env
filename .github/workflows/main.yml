@@ -19,7 +19,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -51,19 +50,8 @@ jobs:
           cd truck_mate_front
           npm ci
 
-      - name: Install start-server-and-test
-        run: npm install -D start-server-and-test
-
-      - name: Start servers and run tests
-        env:
-          CI: true
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        run: |
-          cd truckMate
-          python manage.py runserver &
-
-          cd ../truck_mate_front
-          nohup npm start &
-
-          npx start-server-and-test start http://localhost:3000 cypress:run
-
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
