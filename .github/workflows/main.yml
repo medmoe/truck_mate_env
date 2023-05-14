@@ -51,13 +51,12 @@ jobs:
           npm ci
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
         with:
-          config-file: cypress.config.ts
           working-directory: truck_mate_front
-          build: npm run build
-          start: npm start
-          wait-on: 'http://localhost:3000'
+#          build: npm run build
+#          start: npm start
+#          wait-on: 'http://localhost:3000'
 
 
 
