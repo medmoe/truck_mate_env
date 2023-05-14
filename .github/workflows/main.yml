@@ -50,10 +50,22 @@ jobs:
           cd truck_mate_front
           npm ci
 
-      - name: Run Cypress tests
+      - name: Start the frontend server
         run: |
           cd truck_mate_front
-          npm run cypress:run
+          npm start &
+
+      - name: Wait for the frontend server to start
+        run: sleep 30 # Wait for 30 seconds
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: truck_mate_front
+          build: npm run build
+          start: npm start
+          wait-on: 'http://localhost:3000'
+
 
 
 
