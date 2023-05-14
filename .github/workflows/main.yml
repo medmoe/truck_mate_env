@@ -46,11 +46,11 @@ jobs:
           python manage.py test truckMateApp.tests
 
       - name: Start the backend server
-          env:
-            SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          run: |
-            cd truckMate
-            python manage.py runserver -v 3
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        run: |
+          cd truckMate
+          python manage.py runserver -v 3
 
       - name: Install frontend dependencies
         run: | 
