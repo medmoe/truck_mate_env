@@ -54,7 +54,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: truck_mate_front
-          build: npm run build
           start: npm start
 
 
