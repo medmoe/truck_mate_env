@@ -19,6 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -44,25 +45,25 @@ jobs:
         run: |
           cd truckMate
           python manage.py test truckMateApp.tests
-          python manage.py runserver -v 3
 
       - name: Install frontend dependencies
         run: | 
           cd truck_mate_front
           npm ci
 
-      - name: Wait for the backend server to start
-        run: sleep 5
+      - name: Install start-server-and-test
+        run: npm install -D start-server-and-test
 
-      - name: Start the frontend server
+      - name: Start servers and run tests
+        env:
+          CI: true
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
         run: |
-          cd truck_mate_front
-          npm start
+          cd truckMate
+          python manage.py runserver &
 
-      - name: Wait for the frontend server to start
-        run: sleep 10
+          cd ../truck_mate_front
+          nohup npm start &
 
-      - name: Run cypress tests
-        run: |
-          cd truck_mate_front
-          npm run cypress:run
+          npx start-server-and-test start http://localhost:3000 cypress:run
+
