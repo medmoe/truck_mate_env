@@ -51,10 +51,9 @@ jobs:
           npm ci
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v2
-        with:
-          working-directory: truck_mate_front
-          start: npm start
+        run: |
+          cd truck_mate_front
+          npm run cypress:run
 
 
 
