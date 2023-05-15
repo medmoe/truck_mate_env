@@ -25,14 +25,14 @@ export function NavigationBar() {
         <div>
             <nav className={styles.nav_bar}>
                 <div className={styles.logo}>
-                    <a href="#">Logo</a>
+                    <p>Logo</p>
                 </div>
                 <ul className={styles.menu}>
-                    <li><Link to="/dashboard"><a href="#">Home</a></Link></li>
-                    <li><a href="#">About</a></li>
-                    <li><Link to="/dashboard" ><a href="#">Services</a></Link></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#" onClick={logout}>Logout</a></li>
+                    <li><Link to="/dashboard"><p>Home</p></Link></li>
+                    <li><p>About</p></li>
+                    <li><Link to="/dashboard" ><p>Services</p></Link></li>
+                    <li><p>Contact</p></li>
+                    <li><p onClick={logout}>Logout</p></li>
                 </ul>
                 <div className={styles.burger}>
                     <div className="line"></div>

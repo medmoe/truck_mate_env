@@ -39,4 +39,5 @@ pyvenv.cfg
 # React app
 /truck_mate_front/node_modules/
 /truck_mate_front/build/
+/truck_mate_front/cypress/videos/
 
