@@ -88,28 +88,33 @@ WSGI_APPLICATION = 'truckMate.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-if os.environ.get('GITHUB_WORKFLOW'):
+if 'DYNO' in os.environ:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'github_actions',
-            'USER': 'postgres',
-            'PASSWORD': 'postgres',
-            'HOST': 'localhost',
-            'PORT': '5432'
-        }
+        'default': dj_database_url.config(default='postgres://localhost')
     }
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': "truck_mate",
-            'USER': "postgres",
-            'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-            'HOST': 'localhost',
-            'PORT': '5432',
+    if os.environ.get('GITHUB_WORKFLOW'):
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'github_actions',
+                'USER': 'postgres',
+                'PASSWORD': 'postgres',
+                'HOST': 'localhost',
+                'PORT': '5432'
+            }
         }
-    }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': "truck_mate",
+                'USER': "postgres",
+                'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+                'HOST': 'localhost',
+                'PORT': '5432',
+            }
+        }
 
 
 # Password validation
