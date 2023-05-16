@@ -1,1 +1,2 @@
-web: gunicorn truckMate.wsgi --log-file -
+web: gunicorn truckMate.truckMate.wsgi:application --log-file -
+
