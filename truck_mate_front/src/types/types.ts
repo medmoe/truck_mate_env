@@ -48,4 +48,4 @@ export interface CostInfo {
 }
 
 export const NUM_OF_ITEMS_PER_PAGE = 20;
-export const API = 'http://localhost:8000/';
+export const API = 'https://truck-mate.herokuapp.com/';
