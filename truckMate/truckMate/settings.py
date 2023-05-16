@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     # my apps
-    'truckMateApp',
+    'truckMate.truckMateApp',
 ]
 
 MIDDLEWARE = [
