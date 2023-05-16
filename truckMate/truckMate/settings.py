@@ -20,7 +20,6 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -31,7 +30,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -62,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-
 ]
 
 ROOT_URLCONF = 'truckMate.urls'
@@ -84,7 +81,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'truckMate.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -116,7 +112,6 @@ else:
             }
         }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -135,7 +130,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -146,7 +140,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -167,11 +160,11 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
+    'https://truck-mate.netlify.app'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -193,5 +186,3 @@ django_heroku.settings(locals())
 #     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 #     STATIC_ROOT = 'staticfiles'
 #     STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'))
-
-
