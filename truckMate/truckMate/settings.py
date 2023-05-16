@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'truckMate.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 if 'DYNO' in os.environ:
     DATABASES = {
-        'default': dj_database_url.config(default='postgres://localhost')
+        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
 else:
     if os.environ.get('GITHUB_WORKFLOW'):
