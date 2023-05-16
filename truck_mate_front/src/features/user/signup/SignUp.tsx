@@ -4,6 +4,7 @@ import {SignUpForm} from "./SignUpForm";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../../hooks";
 import {updateDrivers, updateUserId, updateTrucks} from "../userSlice";
+import {API} from "../../../types/types";
 
 interface UserInfo {
     first_name: string,
@@ -41,7 +42,7 @@ export function SignUp() {
             withCredentials: true,
         }
         delete userInfo.pass2;
-        await axios.post("http://localhost:8000/signup/", JSON.stringify(userInfo), options)
+        await axios.post(`${API}signup/`, JSON.stringify(userInfo), options)
             .then((res) => {
                 dispatch(updateDrivers(res.data.drivers));
                 dispatch(updateTrucks(res.data.trucks));

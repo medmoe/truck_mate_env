@@ -4,6 +4,7 @@ import axios from "axios";
 import {LoginForm} from "./LoginForm";
 import {useAppDispatch} from "../../../hooks";
 import {updateDrivers, updateTrucks, updateUserId} from "../userSlice";
+import {API} from "../../../types/types";
 
 interface UserInfo {
     username: string,
@@ -18,7 +19,6 @@ export function Login() {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const [userInfo, setUserInfo] = useState(initialState);
-
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         const options = {
@@ -27,7 +27,7 @@ export function Login() {
             },
             withCredentials: true,
         }
-        await axios.post("http://localhost:8000/login/", JSON.stringify(userInfo), options)
+        await axios.post(`${API}login/`, JSON.stringify(userInfo), options)
             .then((res) => {
                 dispatch(updateUserId(res.data.user_id));
                 dispatch(updateDrivers(res.data.drivers));
