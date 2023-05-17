@@ -167,6 +167,11 @@ CORS_ORIGIN_WHITELIST = [
     'https://truck-mate.netlify.app'
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'https://truck-mate.netlify.app',
+]
+
+
 CORS_ALLOW_CREDENTIALS = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
