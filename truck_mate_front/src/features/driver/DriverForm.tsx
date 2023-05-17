@@ -1,7 +1,7 @@
 import React, {FormEvent, useState} from 'react';
 import styles from './Driver.module.css'
 import {useNavigate} from "react-router-dom";
-import {DriverInfo} from "../../types/types";
+import {DriverInfo, API} from "../../types/types";
 import axios from "axios";
 import {NavigationBar} from "../dashboard/NavigationBar";
 import {useAppSelector} from "../../hooks";
@@ -47,7 +47,7 @@ export function DriverForm() {
         event.preventDefault();
         if (driverData.owner) {
             if (isCreate) {
-                axios.post("http://localhost:8000/drivers/", JSON.stringify(driverData), {
+                axios.post(`${API}drivers/`, JSON.stringify(driverData), {
                     headers: {
                         'content-type': 'application/json',
                         Authorization: `Token ${token}`,
@@ -60,7 +60,7 @@ export function DriverForm() {
                         console.log(err);
                     })
             } else {
-                axios.put(`http://localhost:8000/drivers/${id}/`, JSON.stringify(driverData), {
+                axios.put(`${API}drivers/${id}/`, JSON.stringify(driverData), {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Token ${token}`,
@@ -85,7 +85,7 @@ export function DriverForm() {
     }
     const deleteItem = (event: FormEvent) => {
         event.preventDefault();
-        axios.delete(`http://localhost:8000/drivers/${id}`, {
+        axios.delete(`${API}drivers/${id}`, {
             headers: {
                 'Content-Type': "application/json",
                 Authorization: `Token ${token}`

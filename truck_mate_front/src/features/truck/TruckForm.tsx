@@ -1,6 +1,6 @@
 import React, {FormEvent, useState} from 'react';
 import styles from './Truck.module.css';
-import {TruckInfo} from "../../types/types";
+import {TruckInfo, API} from "../../types/types";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {NavigationBar} from "../dashboard/NavigationBar";
@@ -45,7 +45,7 @@ export function TruckForm() {
         event.preventDefault()
         if (truckData.owner) {
             if (isCreate) {
-                axios.post("http://localhost:8000/trucks/", JSON.stringify(truckData), {
+                axios.post(`${API}trucks/`, JSON.stringify(truckData), {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Token ${token}`,
@@ -58,7 +58,7 @@ export function TruckForm() {
                         console.log(err)
                     })
             } else {
-                axios.put(`http://localhost:8000/trucks/${id}/`, JSON.stringify(truckData), {
+                axios.put(`${API}trucks/${id}/`, JSON.stringify(truckData), {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Token ${token}`,
@@ -83,7 +83,7 @@ export function TruckForm() {
     }
     const deleteItem = (event: FormEvent) => {
         event.preventDefault();
-        axios.delete(`http://localhost:8000/trucks/${id}`, {
+        axios.delete(`${API}trucks/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Token ${token}`
