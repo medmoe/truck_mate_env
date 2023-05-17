@@ -103,3 +103,13 @@
 .performance_form button[type="submit"]:hover {
   background-color: #0069d9;
 }
+
+@media (max-width: 768px) {
+    .performance_row ul {
+        flex-direction: column;
+    }
+    .performance_row ul li {
+        text-align: left;
+        padding: 5px 0;
+    }
+}

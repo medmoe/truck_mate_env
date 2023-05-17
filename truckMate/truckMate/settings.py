@@ -162,15 +162,10 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-    'https://truck-mate.netlify.app'
-]
-
 CORS_ALLOWED_ORIGINS = [
     'https://truck-mate.netlify.app',
+    'http://localhost:3000'
 ]
-
 
 CORS_ALLOW_CREDENTIALS = True
 

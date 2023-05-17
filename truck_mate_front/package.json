@@ -8,7 +8,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.24",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/react-redux": "^7.1.25",
@@ -51,6 +50,7 @@
   "devDependencies": {
     "@types/css-modules": "^1.0.2",
     "@types/cypress": "^1.1.3",
+    "@types/node": "^20.1.7",
     "css-loader": "^6.7.3",
     "cypress": "^12.12.0",
     "style-loader": "^3.3.2"

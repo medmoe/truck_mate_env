@@ -1,3 +1,4 @@
+
 export interface TruckInfo {
     id?:number,
     owner?: number;
@@ -48,4 +49,9 @@ export interface CostInfo {
 }
 
 export const NUM_OF_ITEMS_PER_PAGE = 20;
-export const API = 'https://truck-mate.herokuapp.com/';
+export let API: string = "";
+if (process.env.NODE_ENV === 'production') {
+    API = 'https://truck-mate.herokuapp.com/';
+} else {
+    API = 'http://localhost:8000/';
+}

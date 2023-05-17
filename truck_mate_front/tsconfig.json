@@ -22,7 +22,8 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "types": [
-      "cypress"
+      "cypress",
+      "node"
     ],
   },
   "include": [

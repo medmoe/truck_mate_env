@@ -108,3 +108,13 @@
 .truck_form button[type="submit"]:hover {
   background-color: #0069d9;
 }
+
+@media (max-width: 768px) {
+    .truck_row ul {
+        flex-direction: column;
+    }
+    .truck_row ul li {
+        text-align: left;
+        padding: 5px 0;
+    }
+}

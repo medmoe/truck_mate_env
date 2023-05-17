@@ -104,3 +104,13 @@
 .driver_form button[type="submit"]:hover {
   background-color: #0069d9;
 }
+
+@media (max-width: 768px) {
+    .driver_row ul {
+        flex-direction: column;
+    }
+    .driver_row ul li {
+        text-align: left;
+        padding: 5px 0;
+    }
+}
